@@ -1,127 +1,122 @@
-# Dynamic NeRF
+# Dynamic Neural Radiance Fields (Dynamic-NeRF)
 
-Neural Radiance Fields for Dynamic Scenes
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)]()
+[![PyTorch](https://img.shields.io/badge/PyTorch-1.9%2B-orange)]()
+[![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Status](https://img.shields.io/badge/Status-In%20Development-yellow)]()
 
-![Dynamic NeRF Example](docs/images/dynamic_nerf_example.png)
+A state-of-the-art implementation of Dynamic Neural Radiance Fields for high-quality novel view synthesis from multi-view video or image sequences.
 
-## Overview
+## 🔄 Overview
 
-Dynamic NeRF extends Neural Radiance Fields (NeRF) to handle dynamic scenes. While traditional NeRF excels at recreating static 3D scenes from multiple viewpoints, Dynamic NeRF incorporates temporal information to model scenes with moving objects or changing environmental conditions.
+Dynamic-NeRF extends traditional Neural Radiance Fields (NeRF) to capture and render dynamic 3D scenes with temporal variations. While standard NeRF excels at reconstructing static scenes, Dynamic-NeRF adds the ability to model moving objects, changing lighting conditions, and other time-dependent phenomena.
 
-This implementation includes:
-- Temporal encoding for handling time-varying scenes
-- Spatio-temporal attention mechanism to focus on dynamic elements
-- Efficient ray sampling and volume rendering
-- Comprehensive training and evaluation pipeline
 
-## Installation
+## 🌟 Key Features
 
-### Requirements
-- Python 3.8+
-- PyTorch 1.9+
-- CUDA (for GPU acceleration, recommended)
+- **Temporal Encoding**: Models time as an additional dimension for capturing scene dynamics
+- **Spatio-Temporal Attention**: Advanced attention mechanisms to focus on moving regions
+- **Static-Dynamic Decomposition**: Separate handling of static backgrounds and dynamic foregrounds
+- **Novel View Synthesis**: Generate high-quality novel viewpoints at arbitrary time steps
+- **Temporal Consistency**: Smooth transitions between time steps for realistic rendering
 
-### Setup
+## 🧩 Model Architecture
 
-1. Clone the repository:
+Our Dynamic-NeRF implementation builds upon the original NeRF with several key innovations:
+
+- **Time-Conditioned MLP**: Neural network conditioned on spatial position, viewing direction, and time
+- **Temporal Embedding**: Specialized embedding functions to encode temporal information
+- **Attention Mechanisms**: Spatio-temporal attention for focusing on dynamic regions
+- **Optional Flow Integration**: Incorporation of optical flow for improved temporal coherence
+
+```
+[Architecture Diagram Coming Soon]
+```
+
+## 📊 Datasets
+
+The project supports several datasets for training and evaluation:
+
+- **D-NeRF Dataset**: Synthetic sequences with controlled object motion
+- **Custom Blender Sequences**: Rendered scenes with ground truth camera parameters
+- **Real-World Multi-View Video**: Captured sequences of dynamic scenes
+
+## 🔧 Installation
+
 ```bash
+# Clone the repository
 git clone https://github.com/yourusername/dynamic-nerf.git
 cd dynamic-nerf
+
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies (will be added later)
+pip install -r requirements.txt
 ```
 
-2. Install the package:
-```bash
-pip install -e .
-```
+## 📈 Usage
 
-This will install all required dependencies and make the package available for import.
-
-## Dataset Preparation
-
-Dynamic NeRF supports several dataset formats:
-
-### Blender Synthetic Dataset
-
-For Blender-rendered synthetic scenes:
+### Quick Start
 
 ```bash
-python -m src.scripts.preprocess_data --input_dir /path/to/blender/data --output_dir /path/to/output --dataset_type blender
+# Example command for training (to be implemented)
+python src/train.py --config configs/d_nerf.yaml
+
+# Example command for rendering novel views (to be implemented)
+python src/render.py --model_path checkpoints/model.pt --time_steps 10
 ```
 
-### Custom Video Data
-
-For processing video files or image sequences:
-
-```bash
-python -m src.scripts.preprocess_data --input_dir /path/to/video.mp4 --output_dir /path/to/output --dataset_type custom_video --fps 24
-```
-
-## Training
-
-To train a Dynamic NeRF model:
-
-```bash
-python -m src.train \
-    --config configs/default.yaml \
-    --data_path /path/to/processed/data \
-    --output_dir /path/to/save/model \
-    --experiment_name my_dynamic_scene
-```
-
-Key training parameters can be modified in the config file or via command-line arguments:
-- Learning rate and scheduler
-- Batch size and number of iterations
-- Network architecture (encoding dimensions, network depth)
-- Sampling strategy (number of coarse/fine samples)
-
-## Rendering
-
-To render novel views from a trained model:
-
-```bash
-python -m src.render \
-    --config configs/default.yaml \
-    --checkpoint /path/to/model/checkpoint.pt \
-    --output_dir /path/to/renderings \
-    --render_video \
-    --time_range 0 1 60  # Start time, end time, number of frames
-```
-
-## Model Architecture
-
-The Dynamic NeRF model consists of several key components:
-
-1. **Spatial Encoding**: Position encoding for 3D coordinates.
-2. **Temporal Encoding**: Encodes the time dimension to handle dynamics.
-3. **Spatio-Temporal Attention**: Allows the model to focus on relevant parts of the scene at different times.
-4. **Hierarchical Sampling**: Coarse-to-fine sampling strategy for efficient rendering.
-
-## Results
-
-Example renderings:
-
-![Dynamic NeRF Results](docs/images/results_comparison.png)
-
-## Citation
-
-If you find this implementation useful, please consider citing:
+## 📝 Project Structure
 
 ```
-@misc{dynamicnerf2023,
-  author = {Your Name},
-  title = {Dynamic NeRF: Neural Radiance Fields for Dynamic Scenes},
-  year = {2023},
-  publisher = {GitHub},
-  journal = {GitHub Repository},
-  howpublished = {\url{https://github.com/yourusername/dynamic-nerf}}
-}
+dynamic-nerf/
+├── src/                    # Source code
+│   ├── models/             # Neural network architectures
+│   ├── data/               # Data loading and preprocessing
+│   ├── utils/              # Utility functions
+│   ├── train.py            # Training script
+│   └── render.py           # Rendering script
+├── experiments/            # Jupyter notebooks for experiments
+├── configs/                # Configuration files
+├── data/                   # Dataset storage
+│   └── README.md           # Dataset instructions
+├── docs/                   # Documentation
+└── results/                # Saved results and visualizations
 ```
 
-## License
+## 📊 Results
+
+
+
+## 🛠️ Roadmap
+
+- [x] Project setup and repository structure
+- [x] Implementation of baseline static NeRF
+- [x] Extension to dynamic scenes with temporal encoding
+- [x] Integration of spatio-temporal attention mechanisms
+- [ ] Experimentation with various temporal embeddings
+- [ ] Quantitative and qualitative evaluation
+- [ ] Documentation and result visualization
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📚 References
+
+1. Mildenhall, B. et al. "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis" - *ECCV* (2020)
+2. Pumarola, A. et al. "D-NeRF: Neural Radiance Fields for Dynamic Scenes" - *CVPR* (2021)
+3. Li, Z. et al. "Neural Scene Flow Fields for Space-Time View Synthesis of Dynamic Scenes" - *CVPR* (2021)
+4. Park, K. et al. "Nerfies: Deformable Neural Radiance Fields" - *ICCV* (2021)
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+---
 
-- The original NeRF paper: [NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis](https://arxiv.org/abs/2003.08934)
-- [Dynamic NeRF concepts](https://arxiv.org/abs/2011.13961) for handling time-varying scenes 
+<div align="center">
+    <b>Made with ❤️ by Utkarsh Rajput</b>
+</div> 
