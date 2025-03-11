@@ -1,39 +1,104 @@
 # Default configuration for Dynamic NeRF
 
 # Dataset parameters
-dataset: 'synthetic'
-data_dir: 'data'
-scene: 'lego'
-img_size: [400, 400]
+dataset:
+  type: "blender"                  # Options: "blender", "custom"
+  data_path: "data/processed"      # Path to the processed dataset
+  downsample_factor: 1             # Downsample images by this factor
+  use_cache: true                  # Cache rays and samples for faster training
+  white_background: true           # Use white background for synthetic data
+  train_skip: 1                    # Use every n-th training image
+  val_skip: 8                      # Use every n-th validation image
 
 # Model parameters
-model: 'dynamic_nerf'
-hidden_dims: 256
-pos_encoder_dims: 60
-dir_encoder_dims: 24
-time_encoder_dims: 12
-use_attention: true
+model:
+  static_nerf:
+    use_viewdirs: true             # Use view directions as input
+    hidden_dim: 256                # Width of each hidden layer
+    num_layers: 8                  # Number of hidden layers
+    skip_connections: [4]          # Layers with skip connections
+    mlp_activation: "relu"         # Activation function for MLP
+    output_activation: "sigmoid"   # Activation for RGB output
+
+  dynamic_nerf:
+    use_viewdirs: true             # Use view directions as input
+    hidden_dim: 256                # Width of each hidden layer
+    num_layers: 8                  # Number of hidden layers
+    skip_connections: [4]          # Layers with skip connections
+    mlp_activation: "relu"         # Activation function for MLP
+    output_activation: "sigmoid"   # Activation for RGB output
+    use_temporal_encoding: true    # Use temporal encoding
+    use_attention: true            # Use spatio-temporal attention
+    attention_heads: 4             # Number of attention heads
+    attention_dim: 64              # Attention feature dimension
+
+# Positional Encoding parameters
+encoding:
+  position_encoding:
+    num_freqs: 10                  # Number of frequency bands for positions
+    log_sampling: true             # Use log sampling for frequencies
+  
+  direction_encoding:
+    num_freqs: 4                   # Number of frequency bands for directions
+    log_sampling: true             # Use log sampling for frequencies
+  
+  temporal_encoding:
+    num_freqs: 6                   # Number of frequency bands for time
+    log_sampling: true             # Use log sampling for frequencies
 
 # Training parameters
-epochs: 100
-batch_size: 1024
-learning_rate: 5.0e-4
-lr_decay: 0.1
-lr_decay_steps: 50000
-num_workers: 4
+training:
+  batch_size: 1024                 # Number of rays per batch
+  num_iterations: 200000           # Total number of training iterations
+  learning_rate: 5e-4              # Learning rate
+  lr_scheduler: "exponential"      # Learning rate scheduler type
+  lr_decay_rate: 0.1               # Learning rate decay rate
+  lr_decay_steps: 100000           # Learning rate decay steps
+  use_amp: false                   # Use automatic mixed precision
+
+  # Loss weights
+  loss_weights:
+    rgb_loss: 1.0                  # Weight for RGB loss
+    depth_loss: 0.0                # Weight for depth loss (0 to disable)
+    static_dynamic_loss: 0.01      # Weight for static/dynamic separation loss
+
+  # Optimization settings
+  optimizer: "adam"                # Optimizer (adam, rmsprop, sgd)
+  weight_decay: 0.0                # Weight decay rate
+  grad_clip: 0.0                   # Gradient clipping threshold (0 to disable)
+
+  # Sampling parameters
+  num_coarse_samples: 64           # Number of coarse samples per ray
+  num_fine_samples: 128            # Number of fine samples per ray
+  perturb: true                    # Add noise to sample positions
+  use_hierarchical: true           # Use hierarchical sampling
+
+  # Checkpointing
+  save_every: 5000                 # Save checkpoint every n iterations
+  validate_every: 2500             # Run validation every n iterations
+  save_checkpoint_dir: "checkpoints" # Directory to save checkpoints
+  num_checkpoint_keep: 5           # Number of checkpoints to keep
 
 # Rendering parameters
-near: 2.0
-far: 6.0
-n_samples: 64
-n_importance: 128
-use_hierarchical: true
-chunk_size: 1024
+rendering:
+  near: 2.0                        # Near clipping plane
+  far: 6.0                         # Far clipping plane
+  white_background: true           # Use white background for rendering
+  chunk_size: 32768                # Maximum number of rays to render at once
+  use_depth: false                 # Render depth maps
+  depth_scale: 0.5                 # Scale factor for depth visualization
 
-# Logging parameters
-log_dir: 'logs'
-save_freq: 10
-eval_freq: 5
-visualize: true
-num_viz_views: 5
-num_viz_time_steps: 10 
+# Logging and visualization
+logging:
+  tensorboard_dir: "logs"          # Directory for tensorboard logs
+  use_wandb: false                 # Use Weights & Biases for logging
+  wandb_project: "dynamic-nerf"    # W&B project name
+  log_images_every: 2500           # Log example images every n iterations
+  num_log_images: 4                # Number of images to log
+  
+# Hardware settings
+hardware:
+  num_workers: 4                   # Number of data loader workers
+  device: "cuda"                   # Device to use (cuda, cpu)
+  gpu_ids: [0]                     # List of GPU IDs to use
+  use_multi_gpu: false             # Use multiple GPUs for training 

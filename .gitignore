@@ -82,4 +82,119 @@ weights/
 
 # Exceptions - keep these files even if they match patterns above
 !docs/images/*.png
-!docs/images/*.jpg 
+!docs/images/*.jpg
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# PyCharm and other JetBrains IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Project specific
+logs/
+checkpoints/
+results/
+data/raw/
+data/processed/
+wandb/
+*.pt
+*.pth
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.avi
+*.mov
+
+# Allow specific image files for documentation
+!docs/images/*.png
+!docs/images/*.jpg
+!docs/images/*.gif 
