@@ -11,10 +11,6 @@ A state-of-the-art implementation of Dynamic Neural Radiance Fields for high-qua
 
 Dynamic-NeRF extends traditional Neural Radiance Fields (NeRF) to capture and render dynamic 3D scenes with temporal variations. While standard NeRF excels at reconstructing static scenes, Dynamic-NeRF adds the ability to model moving objects, changing lighting conditions, and other time-dependent phenomena.
 
-<div align="center">
-    <img src="docs/images/dynamic_nerf_example.png" alt="Dynamic NeRF Visualization" width="80%">
-    <p><i>Note: Place a sample rendering in docs/images/dynamic_nerf_example.png</i></p>
-</div>
 
 ## 🌟 Key Features
 
@@ -36,10 +32,6 @@ Our Dynamic-NeRF implementation builds upon the original NeRF with several key i
 - **Hierarchical Sampling**: Coarse-to-fine sampling strategy for efficient rendering
 - **Positional Encoding**: Fourier feature encoding for positions, directions, and time
 
-<div align="center">
-    <img src="docs/images/model_architecture.png" alt="Dynamic NeRF Architecture" width="80%">
-    <p><i>Note: Place an architecture diagram in docs/images/model_architecture.png</i></p>
-</div>
 
 ## 📊 Datasets
 
@@ -55,7 +47,7 @@ We provide tools for preprocessing various data formats. See the [data preproces
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dynamic-nerf.git
+git clone https://github.com/1Utkarsh1/dynamic-nerf.git
 cd dynamic-nerf
 
 # Create a virtual environment
@@ -142,10 +134,6 @@ dynamic-nerf/
 
 Our Dynamic NeRF implementation achieves high-quality rendering of dynamic scenes with temporal consistency. The model can render novel viewpoints at arbitrary time steps, allowing for smooth camera trajectories through both space and time.
 
-<div align="center">
-    <img src="docs/images/results_comparison.png" alt="Dynamic NeRF Results" width="100%">
-    <p><i>Note: Place a comparison of results in docs/images/results_comparison.png</i></p>
-</div>
 
 Performance metrics on the D-NeRF dataset:
 
@@ -198,5 +186,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-    <b>Made with ❤️ by <Your Name></b>
+    <b>Made with ❤️ by <Utkarsh Rajput></b>
 </div> 
