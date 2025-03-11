@@ -1,0 +1,39 @@
+# Default configuration for Dynamic NeRF
+
+# Dataset parameters
+dataset: 'synthetic'
+data_dir: 'data'
+scene: 'lego'
+img_size: [400, 400]
+
+# Model parameters
+model: 'dynamic_nerf'
+hidden_dims: 256
+pos_encoder_dims: 60
+dir_encoder_dims: 24
+time_encoder_dims: 12
+use_attention: true
+
+# Training parameters
+epochs: 100
+batch_size: 1024
+learning_rate: 5.0e-4
+lr_decay: 0.1
+lr_decay_steps: 50000
+num_workers: 4
+
+# Rendering parameters
+near: 2.0
+far: 6.0
+n_samples: 64
+n_importance: 128
+use_hierarchical: true
+chunk_size: 1024
+
+# Logging parameters
+log_dir: 'logs'
+save_freq: 10
+eval_freq: 5
+visualize: true
+num_viz_views: 5
+num_viz_time_steps: 10 
