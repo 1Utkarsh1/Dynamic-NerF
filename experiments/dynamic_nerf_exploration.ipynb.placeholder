@@ -1,0 +1,49 @@
+# Dynamic NeRF Exploration Notebook
+
+This is a placeholder for the Jupyter notebook that will be created when running the project.
+
+To create the actual notebook, run Jupyter and create a new notebook with this name:
+
+```bash
+jupyter notebook
+```
+
+Then navigate to this directory and create a new Python 3 notebook named "dynamic_nerf_exploration.ipynb".
+
+## Suggested Notebook Structure
+
+1. **Introduction**
+   - Overview of Dynamic NeRF
+   - Purpose of the notebook
+
+2. **Setup**
+   - Import necessary modules
+   - Add project root to path
+
+3. **Load Configuration**
+   - Load default configuration
+   - Display key parameters
+
+4. **Initialize Model**
+   - Create encoders
+   - Initialize Dynamic NeRF model
+
+5. **Load Dataset**
+   - Load and preprocess data
+   - Visualize sample images
+
+6. **Training**
+   - Implement simplified training loop
+   - Visualize training progress
+
+7. **Rendering**
+   - Render novel views
+   - Create video of results
+
+8. **Experiments**
+   - Try different model parameters
+   - Compare results
+
+9. **Conclusion**
+   - Summary of findings
+   - Next steps 
