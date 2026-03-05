@@ -7,6 +7,7 @@ Script to render novel views from a trained Dynamic NeRF model.
 
 import os
 import argparse
+import yaml
 import torch
 import numpy as np
 import imageio

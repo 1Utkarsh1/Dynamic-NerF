@@ -138,7 +138,7 @@ class DynamicNeRF(nn.Module):
         # Main MLP for density prediction
         # Takes position and time as input
         self.main_net = nn.Sequential(
-            nn.Linear(pos_encoder_dims + time_encoder_dims, hidden_dims),
+            nn.Linear(self.pos_encoder.num_output_dims + self.time_encoder.num_output_dims, hidden_dims),
             nn.ReLU(True),
             nn.Linear(hidden_dims, hidden_dims),
             nn.ReLU(True),
@@ -170,7 +170,7 @@ class DynamicNeRF(nn.Module):
         # Direction-dependent MLP for color prediction
         # Takes features and encoded directions as input
         self.color_net = nn.Sequential(
-            nn.Linear(hidden_dims + dir_encoder_dims, hidden_dims // 2),
+            nn.Linear(hidden_dims + self.dir_encoder.num_output_dims, hidden_dims // 2),
             nn.ReLU(True),
             nn.Linear(hidden_dims // 2, 3),
             nn.Sigmoid(),  # RGB values in [0, 1]
