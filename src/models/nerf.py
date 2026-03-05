@@ -33,8 +33,8 @@ class PositionalEncoder(nn.Module):
         self.max_freq = num_freqs - 1
         self.num_output_dims = input_dims * (1 + 2 * num_freqs) if include_input else input_dims * 2 * num_freqs
         
-        # Frequency bands
-        self.freq_bands = 2.0 ** torch.linspace(0, self.max_freq, num_freqs)
+        # Frequency bands (registered as buffer so it moves with the module to correct device)
+        self.register_buffer('freq_bands', 2.0 ** torch.linspace(0, self.max_freq, num_freqs))
     
     def forward(self, x):
         """
@@ -100,7 +100,7 @@ class NeRF(nn.Module):
         
         # Main MLP for density prediction
         self.main_net = nn.Sequential(
-            nn.Linear(pos_encoder_dims, hidden_dims),
+            nn.Linear(self.pos_encoder.num_output_dims, hidden_dims),
             nn.ReLU(True),
             nn.Linear(hidden_dims, hidden_dims),
             nn.ReLU(True),
@@ -123,7 +123,7 @@ class NeRF(nn.Module):
         
         # Direction-dependent MLP for color prediction
         self.color_net = nn.Sequential(
-            nn.Linear(hidden_dims + dir_encoder_dims, hidden_dims // 2),
+            nn.Linear(hidden_dims + self.dir_encoder.num_output_dims, hidden_dims // 2),
             nn.ReLU(True),
             nn.Linear(hidden_dims // 2, 3),
             nn.Sigmoid(),  # RGB values in [0, 1]
